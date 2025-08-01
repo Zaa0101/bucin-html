@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I Love Risaa!!!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #FFD9ED;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #C2185B;
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+
+    .container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      overflow: hidden;
+      border-radius: 12px;
+      margin: 10px 0;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    .slide iframe {
+      max-width: 100%;
+      height: 360px;
+      border-radius: 10px;
+      border: 2px solid #FFC5D3;
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.3);
+      color: white;
+      border: none;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .nav.left {
+      left: 0;
+    }
+
+    .nav.right {
+      right: 0;
+    }
+
+    .footer-text {
+      font-size: 1.1rem;
+      color: #D81B60;
+      text-align: center;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .slide iframe {
+        height: 220px;
+      }
+
+      .footer-text {
+        font-size: 1rem;
+      }
+
+      .nav {
+        font-size: 1.5rem;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Judul atas -->
+  <h1>HAPPY GIRLFRIEND'S DAY RISAA💐💝💘🌷!!</h1>
+
+  <!-- Video Slider -->
+  <div class="container">
+    <button class="nav left" onclick="moveSlide(-1)">&#10094;</button>
+    <div class="slider" id="slider">
+      <div class="slide">
+        <iframe src="https://drive.google.com/file/d/1dh4ojXi8iuVETPZtw6cTbdmOuT9wgIfB/preview" allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <div class="slide">
+        <iframe src="https://drive.google.com/file/d/1Tz6uKtgOLKKPm6IUbE59ow8aRh4jgbM3/preview" allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <div class="slide">
+        <iframe src="https://drive.google.com/file/d/13f-QlmpjJF59Z-b19D9tEvxhir0qrFQ0/preview" allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <div class="slide">
+        <iframe src="https://drive.google.com/file/d/1VCTYVcENe1gl8K9utdKr1AF0nm7t8c71/preview" allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <div class="slide">
+        <iframe src="https://drive.google.com/file/d/1G7Kbj93gE4UoRO7TLtWPAJAFV3rXjM8y/preview" allow="autoplay" allowfullscreen></iframe>
+      </div>
+    </div>
+    <button class="nav right" onclick="moveSlide(1)">&#10095;</button>
+  </div>
+
+  <!-- Teks bawah -->
+  <div class="footer-text">dari ejaaa untuk risaaimupp🤏🏻</div>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const slider = document.getElementById('slider');
+
+    function moveSlide(direction) {
+      pauseAllVideos();
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = slides.length - 1;
+      if (currentIndex >= slides.length) currentIndex = 0;
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      playCurrentVideo();
+    }
+
+    function pauseAllVideos() {
+      slides.forEach(slide => {
+        const iframe = slide.querySelector('iframe');
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      });
+    }
+
+    function playCurrentVideo() {
+      const currentSlide = slides[currentIndex];
+      const iframe = currentSlide.querySelector('iframe');
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
+    window.onload = () => {
+      setTimeout(playCurrentVideo, 1000);
+    };
+  </script>
+
+</body>
+</html>
